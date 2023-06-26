@@ -9,6 +9,7 @@ def lowess_grouped(
         x_name: str,
         y_name: str,
         group_name: Union[str, None],
+        smoothed_col_suffix="_smooth",
         frac=0.6666666666666666,
         it=3,
         delta=0.0,
@@ -21,7 +22,7 @@ def lowess_grouped(
     if no group is supplied lowess will be applied to the whole dataset
     """
     df = data.copy()
-    y_name_smoothed = y_name + "_smooth"
+    y_name_smoothed = y_name + smoothed_col_suffix
     if group_name is not None:
         groups = df[group_name].unique().tolist()
         smoothed_dfs = []
