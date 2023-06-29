@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lowess_grouped_lukiwieser"
+version = "0.0.4"
+authors = [
+    { name="Lukas Wieser" },
+]
+description = "Apply groupwise lowess smoothing to a dataframe"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0.3",
+    "statsmodels>=0.14.0",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Source Code" = "https://github.com/lukiwieser/lowess-grouped"
+"Bug Tracker" = "https://github.com/lukiwieser/lowess-grouped/issues"
