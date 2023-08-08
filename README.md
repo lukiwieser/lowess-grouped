@@ -2,7 +2,7 @@
 
 Apply groupwise lowess smoothing to a dataframe.
 
-![lowess-grouped-example](docs/lowess-grouped-example.png)
+![lowess-grouped-example](https://raw.githubusercontent.com/lukiwieser/lowess-grouped/main/docs/lowess-grouped-example.png)
 
 ## Usage
 
@@ -23,7 +23,7 @@ df_smoothed = lowess_grouped(df,
                              frac=0.05)
 ```
 
-For a more detailed example take a look at the notebook [temperature-example.ipynb](example/temperature-example.ipynb).
+For a more detailed example take a look at the notebook [temperature-example.ipynb](https://github.com/lukiwieser/lowess-grouped/blob/main/example/temperature-example.ipynb).
 
 ## More
 
