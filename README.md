@@ -1,16 +1,30 @@
-# lowess-grouped
+# Lowess Grouped
 
 Apply groupwise lowess smoothing to a dataframe.
 
-This project builds upon the lowess function from statsmodels.
+![lowess-grouped-example](docs/lowess-grouped-example.png)
 
 ## Usage
 
-Simply import the package, and pass your dataframe `df` to the function `lowess_grouped`:
+Install the package:
+```console
+pip install lowess-grouped
+```
+
+Then simply import the package, and call the function `lowess_grouped` with your dataframe `df`:
 
 ```python
 from lowess_grouped.lowess_grouped import lowess_grouped
-df_smoothed = lowess_grouped(df, "x_col_name", "y_col_name", "group_name", frac=0.05)
+
+df_smoothed = lowess_grouped(df, 
+                             x_name="year", 
+                             y_name="temperature_anomaly",
+                             group_name="region_name", 
+                             frac=0.05)
 ```
 
-For a more detailed example see the temperature-example.ipynb.
+For a more detailed example take a look at the notebook [temperature-example.ipynb](example/temperature-example.ipynb).
+
+## More
+
+This project builds upon the lowess function from [statsmodels](https://www.statsmodels.org).
