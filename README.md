@@ -1,9 +1,9 @@
 # Lowess Grouped
 
-**Apply groupwise lowess smoothing to a dataframe**
+**Apply groupwise lowess smoothing to a dataframe.**
 
 Smooth data for each category using the [lowess](https://en.wikipedia.org/wiki/Local_regression) (aka loess) algorithm.
-You can use this code for all forms of data that should be smoothed independently by group.
+You can use this code for all forms of data that should be smoothed independently by group:
 
 ![lowess-grouped-example](https://raw.githubusercontent.com/lukiwieser/lowess-grouped/main/docs/lowess-grouped-example.png)
 
@@ -35,7 +35,7 @@ For a detailed example, refer to the notebook [temperature-example.ipynb](https:
 
 ## Motivation
 
-Smoothing data can make plots more readable, and one commonly used method is lowess/loess.
+Smoothing data can make plots more readable, and one commonly used method is lowess/loess, sometimes also referred as *Savitzky–Golay filter*.
 
 Statsmodels lowess only smooths the entire dataframe, leading to undesirable results when you need independent smoothing for multiple groups (e.g., temperature data by regions).
 
