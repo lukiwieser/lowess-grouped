@@ -2,7 +2,7 @@
 
 **Apply groupwise lowess smoothing to a dataframe**
 
-Smooth data for each category using the lowess (aka loess) algorithm.
+Smooth data for each category using the [lowess](https://en.wikipedia.org/wiki/Local_regression) (aka loess) algorithm.
 You can use this code for all forms of data that should be smoothed independently by group.
 
 ![lowess-grouped-example](https://raw.githubusercontent.com/lukiwieser/lowess-grouped/main/docs/lowess-grouped-example.png)
