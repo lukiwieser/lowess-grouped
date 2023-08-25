@@ -12,7 +12,7 @@ You can use this code for all forms of data that should be smoothed independentl
 
 ## Usage
 
-Install the package (Python 3.6 or higher):
+Install the package (Python 3.8 or higher):
 
 ```console
 pip install lowess-grouped

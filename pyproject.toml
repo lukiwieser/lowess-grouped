@@ -10,7 +10,7 @@ authors = [
 ]
 description = "Apply groupwise lowess smoothing to a dataframe"
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 dependencies = [
     "pandas>=1.1.5",
     "statsmodels>=0.12.2",
