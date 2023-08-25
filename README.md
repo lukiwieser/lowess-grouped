@@ -33,6 +33,28 @@ df_smoothed = lowess_grouped(df,
 For a detailed example, refer to the notebook [temperature-example.ipynb](https://github.com/lukiwieser/lowess-grouped/blob/main/example/temperature-example.ipynb).
 
 
+## Testcases
+
+Tests are defined in the folder `tests`. To run them manually, follow these steps: 
+
+1) Download the [source code](https://github.com/lukiwieser/lowess-grouped) from GitHub.
+
+2) Install package locally by executing the following command in the project folder:
+    ```console
+    pip install -e .
+    ```
+
+    You might need to upgrade your version of pip for this to work:
+    ```console
+    pip install --upgrade pip
+    ```
+
+3) Run the tests:
+    ```console
+    python ./tests/test_lowess_grouped.py -v
+    ```
+
+
 ## Motivation
 
 Smoothing data can make plots more readable, and one commonly used method is lowess/loess, sometimes also referred as *Savitzky–Golay filter*.
@@ -40,7 +62,8 @@ Smoothing data can make plots more readable, and one commonly used method is low
 Statsmodels lowess only smooths the entire dataframe, leading to undesirable results when you need independent smoothing for multiple groups (e.g., temperature data by regions).
 
 This package was developed to address this limitation.
-It internally uses statsmodels, that's why some parameters have the same names.
+It internally uses statsmodels.
+That's why some parameters have the same names.
 Feel free to use to code as inspiration.
 
 
