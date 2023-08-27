@@ -1,7 +1,7 @@
 from typing import Union, Literal
 
 import pandas as pd
-import statsmodels.api as sm
+from statsmodels.nonparametric.smoothers_lowess import lowess
 
 
 def lowess_grouped(
@@ -37,12 +37,13 @@ def lowess_grouped(
 
     df = data.copy()
     y_name_smoothed = y_name + smoothed_col_suffix
+
     if group_name is not None:
         groups = df[group_name].unique().tolist()
         smoothed_dfs = []
         for group in groups:
             df_by_select_group = df[df[group_name] == group]
-            smoothed_df = sm.nonparametric.lowess(
+            smoothed_df = lowess(
                 df_by_select_group[y_name],
                 df_by_select_group[x_name],
                 frac=frac,
@@ -52,14 +53,12 @@ def lowess_grouped(
                 missing=missing,
                 return_sorted=return_sorted
             )
-            smoothed_df = pd.DataFrame(smoothed_df)
-            smoothed_df.columns = [x_name, y_name_smoothed]
-            smoothed_df[x_name] = smoothed_df[x_name].astype(int)
+            smoothed_df = pd.DataFrame(smoothed_df, columns=[x_name, y_name_smoothed])
             smoothed_df[group_name] = group
             smoothed_dfs.append(smoothed_df)
         return pd.merge(df, pd.concat(smoothed_dfs), how="left", on=[x_name, group_name])
     else:
-        smoothed_df = sm.nonparametric.lowess(
+        smoothed_df = lowess(
             df[y_name],
             df[x_name],
             frac=frac,
@@ -69,6 +68,5 @@ def lowess_grouped(
             missing=missing,
             return_sorted=return_sorted
         )
-        smoothed_df = pd.DataFrame(smoothed_df)
-        smoothed_df.columns = [x_name, y_name_smoothed]
+        smoothed_df = pd.DataFrame(smoothed_df, columns=[x_name, y_name_smoothed])
         return pd.merge(df, smoothed_df, how="left", on=x_name)
