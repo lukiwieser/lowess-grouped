@@ -70,3 +70,4 @@ Feel free to use to code as inspiration.
 ## Attribution
 
 This project builds upon the lowess function from [statsmodels](https://www.statsmodels.org).
+The temperature data used in the example notebook and testcases is from [Berkley Earth](https://berkeleyearth.org/data/), and licensed under [Creative Commons BY-NC 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/).
