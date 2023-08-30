@@ -5,8 +5,7 @@
 Smooth data for each category using the [lowess](https://en.wikipedia.org/wiki/Local_regression) (aka loess) algorithm.
 You can use this code for all forms of data that should be smoothed independently by group:
 
-![lowess-grouped-example](https://raw.githubusercontent.com/lukiwieser/lowess-grouped/main/docs/lowess-grouped-example.png)
-
+![lowess-grouped-example](https://raw.githubusercontent.com/lukiwieser/lowess-grouped/main/docs/lowess-grouped-example.svg)
 *Figure 1: Smoothed temperature data for each region*
 
 
