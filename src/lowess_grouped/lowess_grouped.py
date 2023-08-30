@@ -8,7 +8,7 @@ def lowess_grouped(
         data: pd.DataFrame,
         x_name: Union[str, Tuple[str, ...]],
         y_name: Union[str, Tuple[str, ...]],
-        group_name: Union[str, None],
+        group_name: Union[str, Tuple[str, ...], None],
         smoothed_col_suffix: Union[str, Tuple[str, ...]] = "_smooth",
         frac: float = 0.6666666666666666,
         it: int = 3,
