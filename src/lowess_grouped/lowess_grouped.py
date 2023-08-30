@@ -38,7 +38,10 @@ def lowess_grouped(
     df = data.copy()
 
     if type(y_name) is str:
-        y_name_smoothed = y_name + smoothed_col_suffix
+        if type(smoothed_col_suffix) is str:
+            y_name_smoothed = y_name + smoothed_col_suffix
+        else:
+            raise ValueError("If type of y_name is string then smoothed_col_suffix must also be string")
     elif type(y_name) is tuple:
         if type(smoothed_col_suffix) is str:
             y_name_smoothed = (y_name[0] + smoothed_col_suffix,) + (y_name[1:])
