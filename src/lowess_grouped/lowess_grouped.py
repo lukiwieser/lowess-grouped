@@ -1,4 +1,4 @@
-from typing import Union, Literal
+from typing import Union, Literal, Tuple
 
 import pandas as pd
 from statsmodels.nonparametric.smoothers_lowess import lowess
@@ -6,10 +6,10 @@ from statsmodels.nonparametric.smoothers_lowess import lowess
 
 def lowess_grouped(
         data: pd.DataFrame,
-        x_name: str,
-        y_name: str,
+        x_name: Union[str, Tuple[str, ...]],
+        y_name: Union[str, Tuple[str, ...]],
         group_name: Union[str, None],
-        smoothed_col_suffix: str = "_smooth",
+        smoothed_col_suffix: Union[str, Tuple[str, ...]] = "_smooth",
         frac: float = 0.6666666666666666,
         it: int = 3,
         delta: float = 0.0,
@@ -36,7 +36,21 @@ def lowess_grouped(
     """
 
     df = data.copy()
-    y_name_smoothed = y_name + smoothed_col_suffix
+
+    if type(y_name) is str:
+        y_name_smoothed = y_name + smoothed_col_suffix
+    elif type(y_name) is tuple:
+        if type(smoothed_col_suffix) is str:
+            y_name_smoothed = (y_name[0] + smoothed_col_suffix,) + (y_name[1:])
+        elif type(smoothed_col_suffix) is tuple:
+            if len(y_name) == len(smoothed_col_suffix):
+                y_name_smoothed = tuple(x + y for x, y in zip(y_name, smoothed_col_suffix))
+            else:
+                raise ValueError("Tuple of smoothed_col_suffix must have same length as tuple of y_name")
+        else:
+            raise ValueError("Type of smoothed_col_suffix not supported")
+    else:
+        raise ValueError("Type of y_name not supported")
 
     if group_name is not None:
         groups = df[group_name].unique().tolist()
