@@ -56,14 +56,14 @@ Tests are defined in the folder `tests`. To run them manually, follow these step
 
 ## Motivation
 
-Smoothing data can make plots more readable, and one commonly used method is lowess/loess, sometimes also referred as *Savitzky–Golay filter*.
+Smoothing data can greatly improve the interpretability of visualizations.
+One commonly used method is lowess, also knows as loess, sometimes also referred as *Savitzky–Golay filter*.
 
-Statsmodels lowess only smooths the entire dataframe, leading to undesirable results when you need independent smoothing for multiple groups (e.g., temperature data by regions).
+However, the built-in lowess function in Statsmodels (a popular statistics package) applies smoothing to the entire dataframe.
+This can lead to undesirable results when you need independent smoothing for multiple groups (e.g., temperature data by regions).
 
-This package was developed to address this limitation.
-It internally uses statsmodels.
-That's why some parameters have the same names.
-Feel free to use to code as inspiration.
+This package was developed to address this limitation and provide some convenience, like getting a dataframe with column names back, instead of unnamed numpy arrays.
+Internally it still uses Statsmodels.
 
 
 ## Attribution
