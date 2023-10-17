@@ -16,6 +16,9 @@ class TestLowessGrouped(unittest.TestCase):
         self.temp_region = pd.read_csv(DATA_DIR / "temperature-by-region.csv")
 
     def test_lowess_has_no_side_effects(self):
+        """
+        Test if function lowess_grouped() has no side effects (i.e. does not change the input dataframe)
+        """
         temp_region_copy = self.temp_region.copy()
 
         lowess_grouped(self.temp_region, "year", "temperature_anomaly", "region_name", frac=0.05)
@@ -26,6 +29,10 @@ class TestLowessGrouped(unittest.TestCase):
         )
 
     def test_lowess_for_multiple_groups(self):
+        """
+        Test if lowess smoothing works correctly for multiple groups
+        """
+
         # smooth data with lowess-grouped
         lowess_grouped_output = lowess_grouped(
             self.temp_region,
@@ -54,6 +61,10 @@ class TestLowessGrouped(unittest.TestCase):
             )
 
     def test_lowess_for_single_groups(self):
+        """
+        Test if lowess smoothing works correctly for a single group
+        """
+
         # foreach region (aka group), check if lowess-grouped produces the same output as statmodels lowess()
         groups = self.temp_region["region_name"].unique().tolist()
         for group in groups:
@@ -80,6 +91,9 @@ class TestSmoothingSuffix(unittest.TestCase):
         self.temp_region = pd.read_csv(DATA_DIR / "temperature-by-region.csv")
 
     def test_str_suffix_str_y_name(self):
+        """
+        Test using a string as smoothed_col_suffix, when y_name is also a string
+        """
         self.temp_region = lowess_grouped(self.temp_region, "year", "temperature_anomaly", "region_name",
                                           smoothed_col_suffix="_smooth2", frac=0.05)
 
@@ -89,6 +103,9 @@ class TestSmoothingSuffix(unittest.TestCase):
             "Smoothed column has either wrong name, or does not exist")
 
     def test_tuple_suffix_str_y_name(self):
+        """
+        Test using a tuple as smoothed_col_suffix, when y_name is a string
+        """
         with self.assertRaises(ValueError) as cm:
             lowess_grouped(self.temp_region, "year", "temperature_anomaly", "region_name",
                            smoothed_col_suffix=("_smooth2", "_smooth3"), frac=0.05)
@@ -96,6 +113,9 @@ class TestSmoothingSuffix(unittest.TestCase):
         self.assertEqual(str(cm.exception), "If type of y_name is string then smoothed_col_suffix must also be string")
 
     def test_str_suffix_tuple_y_name(self):
+        """
+        Test using a string as smoothed_col_suffix, when y_name is a tuple
+        """
         self.temp_region = self.temp_region.rename(columns={'temperature_anomaly': ('temperature_anomaly', 'median')})
 
         self.temp_region = lowess_grouped(self.temp_region, "year", ('temperature_anomaly', 'median'), "region_name")
@@ -106,6 +126,9 @@ class TestSmoothingSuffix(unittest.TestCase):
             "Smoothed column has either wrong name, or does not exist")
 
     def test_tuple_suffix_tuple_y_name(self):
+        """
+        Test using a tuple as smoothed_col_suffix, when y_name is a tuple of the same length
+        """
         self.temp_region = self.temp_region.rename(columns={'temperature_anomaly': ('temperature_anomaly', 'median')})
 
         self.temp_region = lowess_grouped(self.temp_region, "year", ('temperature_anomaly', 'median'),
@@ -117,6 +140,9 @@ class TestSmoothingSuffix(unittest.TestCase):
             "Smoothed column has either wrong name, or does not exist")
 
     def test_tuple_suffix_wrong_length(self):
+        """
+        Test using a tuple as smoothed_col_suffix, when y_name is a tuple with a different length
+        """
         temp_region = self.temp_region.rename(columns={'temperature_anomaly': ('temperature_anomaly', 'median')})
 
         with self.assertRaises(ValueError) as cm:
