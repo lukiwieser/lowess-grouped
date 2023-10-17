@@ -4,6 +4,30 @@ import pandas as pd
 from statsmodels.nonparametric.smoothers_lowess import lowess
 
 
+def _add_suffix(
+        y_name: Union[str, Tuple[str, ...]],
+        smoothed_col_suffix: Union[str, Tuple[str, ...]]
+) -> Union[str, Tuple[str, ...]]:
+
+    if type(y_name) is str:
+        if type(smoothed_col_suffix) is str:
+            return y_name + smoothed_col_suffix
+        else:
+            raise ValueError("If type of y_name is string then smoothed_col_suffix must also be string")
+    elif type(y_name) is tuple:
+        if type(smoothed_col_suffix) is str:
+            return (y_name[0] + smoothed_col_suffix,) + (y_name[1:])
+        elif type(smoothed_col_suffix) is tuple:
+            if len(y_name) == len(smoothed_col_suffix):
+                return tuple(x + y for x, y in zip(y_name, smoothed_col_suffix))
+            else:
+                raise ValueError("Tuple of smoothed_col_suffix must have same length as tuple of y_name")
+        else:
+            raise ValueError("Type of smoothed_col_suffix not supported")
+    else:
+        raise ValueError("Type of y_name not supported")
+
+
 def lowess_grouped(
         data: pd.DataFrame,
         x_name: Union[str, Tuple[str, ...]],
@@ -35,26 +59,13 @@ def lowess_grouped(
     :return: Copy of the original dataframe, with a new column added for the smoothed y-values.
     """
 
+    # copy dataframe so that the function input is not changed (= side effect)
     df = data.copy()
 
-    if type(y_name) is str:
-        if type(smoothed_col_suffix) is str:
-            y_name_smoothed = y_name + smoothed_col_suffix
-        else:
-            raise ValueError("If type of y_name is string then smoothed_col_suffix must also be string")
-    elif type(y_name) is tuple:
-        if type(smoothed_col_suffix) is str:
-            y_name_smoothed = (y_name[0] + smoothed_col_suffix,) + (y_name[1:])
-        elif type(smoothed_col_suffix) is tuple:
-            if len(y_name) == len(smoothed_col_suffix):
-                y_name_smoothed = tuple(x + y for x, y in zip(y_name, smoothed_col_suffix))
-            else:
-                raise ValueError("Tuple of smoothed_col_suffix must have same length as tuple of y_name")
-        else:
-            raise ValueError("Type of smoothed_col_suffix not supported")
-    else:
-        raise ValueError("Type of y_name not supported")
+    # create name for the new column containing the smoothed data
+    y_name_smoothed = _add_suffix(y_name, smoothed_col_suffix)
 
+    # smooth the data in column y_name accordingly
     if group_name is not None:
         groups = df[group_name].unique().tolist()
         smoothed_dfs = []
